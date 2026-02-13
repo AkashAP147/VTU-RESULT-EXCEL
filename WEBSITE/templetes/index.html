@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VTU Result Portal</title>
+</head>
+<body>
+
+<h2>Enter USN and Captchas</h2>
+
+<form method="POST">
+
+    USN: <input type="text" name="usn" required><br><br>
+
+    {% for i in range(1,6) %}
+        CAPTCHA SEM {{i}}:
+        <input type="text" name="captcha{{i}}" required><br><br>
+    {% endfor %}
+
+    <button type="submit">Fetch Results</button>
+
+</form>
+
+</body>
+</html>

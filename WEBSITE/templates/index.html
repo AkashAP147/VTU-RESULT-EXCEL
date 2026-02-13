@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VTU Result Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        h2 {
+            text-align: center;
+        }
+        .usn-row {
+            margin-bottom: 20px;
+        }
+        .usn-row label {
+            font-weight: bold;
+        }
+        .usn-row input {
+            width: 200px;
+            padding: 6px;
+            margin-left: 10px;
+        }
+        .sem-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            gap: 12px;
+        }
+        .sem-row label {
+            min-width: 60px;
+            font-weight: bold;
+        }
+        .sem-row img {
+            height: 40px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .sem-row input {
+            padding: 6px;
+            width: 140px;
+        }
+        .refresh-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            title: "Refresh CAPTCHA";
+        }
+        button[type="submit"] {
+            margin-top: 15px;
+            padding: 10px 25px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h2>VTU Result Portal</h2>
+
+<form method="POST" action="/submit">
+
+    <div class="usn-row">
+        <label>USN:</label>
+        <input type="text" name="usn" required>
+    </div>
+
+    {% for i in range(1,6) %}
+    <div class="sem-row">
+        <label>SEM {{ i }}:</label>
+        <img id="captchaImg{{ i }}" src="/captcha/sem{{ i }}" alt="CAPTCHA" title="Click to refresh"
+             onclick="refreshCaptcha({{ i }})">
+        <button type="button" class="refresh-btn" onclick="refreshCaptcha({{ i }})" title="Refresh CAPTCHA">🔄</button>
+        <input type="text" name="captcha{{ i }}" placeholder="Enter CAPTCHA">
+    </div>
+    {% endfor %}
+
+    <button type="submit">Fetch Results</button>
+
+</form>
+
+<script>
+    function refreshCaptcha(sem) {
+        var img = document.getElementById("captchaImg" + sem);
+        img.src = "/refresh_captcha/sem" + sem + "?t=" + Date.now();
+    }
+</script>
+
+</body>
+</html>

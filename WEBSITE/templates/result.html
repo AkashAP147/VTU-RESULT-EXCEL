@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Results</title>
+
+    <script>
+        function showSem(sem) {
+            document.querySelectorAll(".sem").forEach(el => el.style.display = "none");
+            document.getElementById(sem).style.display = "block";
+        }
+    </script>
+</head>
+<body>
+
+<h2>Semester Results</h2>
+
+<button onclick="showSem('sem1')">SEM 1</button>
+<button onclick="showSem('sem2')">SEM 2</button>
+<button onclick="showSem('sem3')">SEM 3</button>
+<button onclick="showSem('sem4')">SEM 4</button>
+<button onclick="showSem('sem5')">SEM 5</button>
+
+<hr>
+
+{% for sem, content in results.items() %}
+    <div id="{{sem}}" class="sem" style="display:none;">
+        {% if content %}
+            {{ content | safe }}
+        {% else %}
+            <h3>No result found</h3>
+        {% endif %}
+    </div>
+{% endfor %}
+
+</body>
+</html>
